@@ -1,11 +1,15 @@
 import React from "react";
 
-import NewTaskForm from "./new-task-form";
 
-const Tasks = ({description, created}) => {
-  return (
+class Tasks extends React.Component {
+
+  render() {
+
+    const {description, created} = this.props;
+
+    return (
       <div className="view">
-        <NewTaskForm />
+        <input className="toggle" type="checkbox" />
         <label>
           <span className="description">{description}</span>
           <span className="created">{created}</span>
@@ -14,6 +18,8 @@ const Tasks = ({description, created}) => {
         <button className="icon icon-destroy"></button>
       </div>
   )
+  }
 }
+
 
 export default Tasks
