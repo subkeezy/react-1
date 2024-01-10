@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { formatDistanceToNow } from 'date-fns';
 
 import Header from './header';
@@ -7,23 +6,22 @@ import TaskList from './task-list';
 import Footer from './footer';
 
 class App extends React.Component {
-  maxId = 100;
-
   constructor() {
     super();
     this.state = {
       data: [this.createTodoItem(), this.createTodoItem(), this.createTodoItem('Specified value')],
       filter: 'all',
     };
+    this.maxId = 100;
   }
 
-  onToggleEdit = (id) => {
+  onToggleEdit(id) {
     this.setState(({ data }) => ({
       data: this.toggleProperty(data, id, 'edit'),
     }));
-  };
+  }
 
-  onEditing = (event, id) => {
+  onEditing(event, id) {
     if (event.key === 'Enter') {
       this.setState(({ data }) => {
         const idx = data.findIndex((el) => el.id === id);
@@ -46,13 +44,13 @@ class App extends React.Component {
         data: this.toggleProperty(data, id, 'edit'),
       }));
     }
-  };
+  }
 
-  onToggleDone = (id) => {
+  onToggleDone(id) {
     this.setState(({ data }) => ({
       data: this.toggleProperty(data, id, 'done'),
     }));
-  };
+  }
 
   onFilter(data, filter) {
     if (filter === 'all') {
@@ -66,16 +64,16 @@ class App extends React.Component {
     }
   }
 
-  deleteCompleted = () => {
+  deleteCompleted() {
     this.setState(({ data }) => {
       const filteredData = data.filter((el) => !el.done);
       return {
         data: filteredData,
       };
     });
-  };
+  }
 
-  deleteItem = (id) => {
+  deleteItem(id) {
     this.setState(({ data }) => {
       const idx = data.findIndex((el) => el.id === id);
 
@@ -85,9 +83,9 @@ class App extends React.Component {
         data: newData,
       };
     });
-  };
+  }
 
-  addItem = (text) => {
+  addItem(text) {
     const newItem = this.createTodoItem(text);
 
     this.setState(({ data }) => {
@@ -96,11 +94,11 @@ class App extends React.Component {
         data: newArray,
       };
     });
-  };
+  }
 
-  onFilterChange = (filter) => {
+  onFilterChange(filter) {
     this.setState({ filter });
-  };
+  }
 
   toggleProperty(arr, id, propName) {
     const idx = arr.findIndex((el) => el.id === id);
