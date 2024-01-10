@@ -19,7 +19,7 @@ function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing }) {
 
   TaskList.propTypes = {
     todos: propTypes.arrayOf(propTypes.object).isRequired,
-    onDeleted: propTypes.func.isRequired,
+    onDeleted: propTypes.func,
     onToggleEdit: propTypes.func.isRequired,
     onToggleDone: propTypes.func.isRequired,
     onEditing: propTypes.func.isRequired,
