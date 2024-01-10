@@ -44,6 +44,9 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "moduleDirectory": ["node_modules", "src/"]
       }
+    },
+    "import/parsers": {
+      "@babel/eslint-parser": [".js"]
     }
   }
 }

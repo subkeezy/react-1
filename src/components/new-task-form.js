@@ -1,11 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-class NewTaskForm extends React.Component {
-  static propTypes = {
-    onItemAdded: propTypes.func.isRequired,
-  };
+NewTaskForm.propTypes = {
+  onItemAdded: propTypes.func.isRequired,
+};
 
+class NewTaskForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -13,13 +13,13 @@ class NewTaskForm extends React.Component {
     };
   }
 
-  onInputChange = (e) => {
+  onInputChange(e) {
     this.setState({
       input: e.target.value,
     });
-  };
+  }
 
-  onSubmit = (e) => {
+  onSubmit(e) {
     e.preventDefault();
     const { input } = this.state;
     const { onItemAdded } = this.props;
@@ -27,7 +27,7 @@ class NewTaskForm extends React.Component {
     this.setState({
       input: '',
     });
-  };
+  }
 
   render() {
     const { input } = this.state;
@@ -36,7 +36,6 @@ class NewTaskForm extends React.Component {
         <input
           className="new-todo"
           placeholder="What needs to be done?"
-          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           onChange={this.onInputChange}
           value={input}
