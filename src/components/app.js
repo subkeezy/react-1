@@ -13,7 +13,6 @@ class App extends React.Component {
       filter: 'all',
     };
   }
-  // maxId = 100;
 
   onToggleEdit(id) {
     this.setState(({ data }) => ({
@@ -94,6 +93,7 @@ class App extends React.Component {
         data: newArray,
       };
     });
+    return new Date();
   }
 
   onFilterChange(filter) {
