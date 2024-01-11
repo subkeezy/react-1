@@ -2,14 +2,6 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 import TasksFilter from './tasks-filter';
-
-Footer.propTypes = {
-  todoCount: propTypes.number.isRequired,
-  deleteCompleted: propTypes.func.isRequired,
-  onFilterChange: propTypes.func.isRequired,
-  filter: propTypes.string.isRequired,
-};
-
 class Footer extends React.Component {
   render() {
     const { todoCount, deleteCompleted, onFilterChange, filter } = this.props;
@@ -25,5 +17,12 @@ class Footer extends React.Component {
     );
   }
 }
+
+Footer.propTypes = {
+  todoCount: propTypes.number.isRequired,
+  deleteCompleted: propTypes.func.isRequired,
+  onFilterChange: propTypes.func.isRequired,
+  filter: propTypes.string.isRequired,
+};
 
 export default Footer;

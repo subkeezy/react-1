@@ -1,16 +1,14 @@
 import React from 'react';
 import propTypes from 'prop-types';
-
-NewTaskForm.propTypes = {
-  onItemAdded: propTypes.func.isRequired,
-};
-
 class NewTaskForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       input: '',
     };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onInputChange(e) {
@@ -44,5 +42,9 @@ class NewTaskForm extends React.Component {
     );
   }
 }
+
+NewTaskForm.propTypes = {
+  onItemAdded: propTypes.func.isRequired,
+};
 
 export default NewTaskForm;

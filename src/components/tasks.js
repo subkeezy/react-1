@@ -1,23 +1,5 @@
 import React from 'react';
 import propTypes from 'prop-types';
-
-Tasks.defaultProps = {
-  description: 'Tasks default value',
-  id: Math.random(),
-};
-
-Tasks.propTypes = {
-  id: propTypes.number,
-  description: propTypes.string,
-  edit: propTypes.bool.isRequired,
-  done: propTypes.bool.isRequired,
-  created: propTypes.string.isRequired,
-  onDeleted: propTypes.func.isRequired,
-  onToggleEdit: propTypes.func.isRequired,
-  onToggleDone: propTypes.func.isRequired,
-  onEditing: propTypes.func.isRequired,
-};
-
 class Tasks extends React.Component {
   render() {
     const {
@@ -58,5 +40,22 @@ class Tasks extends React.Component {
     );
   }
 }
+
+Tasks.defaultProps = {
+  description: 'Tasks default value',
+  id: Math.random(),
+};
+
+Tasks.propTypes = {
+  id: propTypes.number,
+  description: propTypes.string,
+  edit: propTypes.bool.isRequired,
+  done: propTypes.bool.isRequired,
+  created: propTypes.string.isRequired,
+  onDeleted: propTypes.func.isRequired,
+  onToggleEdit: propTypes.func.isRequired,
+  onToggleDone: propTypes.func.isRequired,
+  onEditing: propTypes.func.isRequired,
+};
 
 export default Tasks;

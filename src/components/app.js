@@ -6,14 +6,14 @@ import TaskList from './task-list';
 import Footer from './footer';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: [this.createTodoItem(), this.createTodoItem(), this.createTodoItem('Specified value')],
       filter: 'all',
     };
-    this.maxId = 100;
   }
+  // maxId = 100;
 
   onToggleEdit(id) {
     this.setState(({ data }) => ({
@@ -111,7 +111,7 @@ class App extends React.Component {
 
   createTodoItem(description) {
     return {
-      id: this.maxId++,
+      id: Math.random(),
       description,
       created: this.createdTime(),
       done: false,
@@ -134,20 +134,20 @@ class App extends React.Component {
 
     return (
       <section className="todoapp">
-        <Header onItemAdded={this.addItem} />
+        <Header onItemAdded={this.addItem.bind(this)} />
         <TaskList
           todos={visibleItems}
-          onDeleted={this.deleteItem}
-          onToggleEdit={this.onToggleEdit}
-          onToggleDone={this.onToggleDone}
-          onEditing={this.onEditing}
+          onDeleted={this.deleteItem.bind(this)}
+          onToggleEdit={this.onToggleEdit.bind(this)}
+          onToggleDone={this.onToggleDone.bind(this)}
+          onEditing={this.onEditing.bind(this)}
         />
         <Footer
           doneCount={doneCount}
           todoCount={todoCount}
-          deleteCompleted={this.deleteCompleted}
+          deleteCompleted={this.deleteCompleted.bind(this)}
           filter={filter}
-          onFilterChange={this.onFilterChange}
+          onFilterChange={this.onFilterChange.bind(this)}
         />
       </section>
     );
