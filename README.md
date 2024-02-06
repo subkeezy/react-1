@@ -1,1 +1,1 @@
-vercel: https://todo-react-seven-liard.vercel.app/
+timer: https://todo-react-seven-liard.vercel.app/
