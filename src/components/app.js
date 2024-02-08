@@ -81,7 +81,7 @@ class App extends React.Component {
       const idx = data.findIndex((el) => el.id === id);
 
       const newData = [...data.slice(0, idx), ...data.slice(idx + 1)];
-      sessionStorage.setItem('todo', JSON.stringify(newData))
+      sessionStorage.setItem('todos', JSON.stringify(newData))
       return {
         data: newData,
       };
@@ -91,6 +91,9 @@ class App extends React.Component {
   onPauseTimer(id, time) {
     this.setState(({ data }) => {
       const idx = data.findIndex((el) => el.id === id);
+      if (idx < 0) {
+        return {data}
+      }
 
       const oldItem = data[idx];
       const newItem = {

@@ -50,10 +50,10 @@ class Task extends React.Component {
   }
 }
 
-Task.defaultProps = {
-  description: 'Tasks default value',
-  id: Math.random(),
-};
+// Task.defaultProps = {
+//   description: 'Tasks default value',
+//   id: Math.random(),
+// };
 
 Task.propTypes = {
   id: propTypes.number,
