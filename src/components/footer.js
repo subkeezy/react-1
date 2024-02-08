@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-import TasksFilter from './tasks-filter';
+import TasksFilter from './TasksFilter';
 class Footer extends React.Component {
   render() {
     const { todoCount, deleteCompleted, onFilterChange, filter } = this.props;

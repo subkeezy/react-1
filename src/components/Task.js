@@ -1,6 +1,10 @@
 import React from 'react';
 import propTypes from 'prop-types';
-class Tasks extends React.Component {
+import cn from 'classnames';
+
+import Timer from './Timer';
+
+class Task extends React.Component {
   render() {
     const {
       id,
@@ -10,27 +14,32 @@ class Tasks extends React.Component {
       onToggleEdit,
       onToggleDone,
       onEditing,
+      onPauseTimer,
 
-      edit,
       done,
+      edit,
     } = this.props;
 
-    let classNames;
-    if (done) {
-      classNames = 'completed';
-    } else if (edit) {
-      classNames += ' editing';
-    } else {
-      classNames = '';
-    }
+    const timer = (
+      <Timer 
+        {...this.props}
+        onPauseTimer={onPauseTimer}
+      />
+    )
+
+    let classNames = cn({
+      completed: done,
+      ' editing': edit,
+    });
 
     return (
       <li className={classNames}>
         <div className="view">
           <input className="toggle" type="checkbox" onChange={onToggleDone} />
           <label>
-            <span className="description">{description}</span>
-            <span className="created">{created}</span>
+            <span className="title">{description}</span>
+            {timer}
+            <span className="description">{created}</span>
           </label>
           <button type="button" onClick={onToggleEdit} className="icon icon-edit" />
           <button type="button" onClick={onDeleted} className="icon icon-destroy" />
@@ -41,12 +50,12 @@ class Tasks extends React.Component {
   }
 }
 
-Tasks.defaultProps = {
+Task.defaultProps = {
   description: 'Tasks default value',
   id: Math.random(),
 };
 
-Tasks.propTypes = {
+Task.propTypes = {
   id: propTypes.number,
   description: propTypes.string,
   edit: propTypes.bool.isRequired,
@@ -56,6 +65,7 @@ Tasks.propTypes = {
   onToggleEdit: propTypes.func.isRequired,
   onToggleDone: propTypes.func.isRequired,
   onEditing: propTypes.func.isRequired,
+  min: propTypes.string,
+  sec: propTypes.string,
 };
-
-export default Tasks;
+export default Task;

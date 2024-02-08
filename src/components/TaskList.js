@@ -1,18 +1,20 @@
 import propTypes from 'prop-types';
 
-import Tasks from './tasks';
+import Task from './Task';
 
-function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing }) {
+function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing, onPauseTimer}) {
   const elements = todos.map((el) => {
     const { id, ...elProps } = el;
     return (
-      <Tasks
+      <Task
         key={id}
         {...elProps}
         onDeleted={() => onDeleted(id)}
         onToggleDone={() => onToggleDone(id)}
         onToggleEdit={() => onToggleEdit(id)}
         onEditing={(e) => onEditing(e, id)}
+        onPauseTimer={onPauseTimer}
+        id={id}
       />
     );
   });

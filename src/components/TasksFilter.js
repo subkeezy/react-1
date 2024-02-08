@@ -1,4 +1,5 @@
 import propTypes from 'prop-types';
+import cn from 'classnames';
 
 const filterBtns = [
   { name: 'all', description: 'All' },
@@ -13,12 +14,9 @@ function TasksFilter({ filter, onFilterChange }) {
   };
   const buttons = filterBtns.map(({ name, description }) => {
     const isActive = name === filter;
-    let classNames;
-    if (isActive) {
-      classNames = 'selected';
-    } else {
-      classNames = '';
-    }
+    let classNames = cn({
+      selected: isActive,
+    });
 
     return (
       <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>

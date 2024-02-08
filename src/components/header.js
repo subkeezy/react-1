@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 
-import NewTaskForm from './new-task-form';
+import NewTaskForm from './NewTaskForm';
 
 function Header({ onItemAdded }) {
   Header.propTypes = {
@@ -10,7 +10,7 @@ function Header({ onItemAdded }) {
   return (
     <header className="header">
       <h1>todos</h1>
-      <NewTaskForm onItemAdded={(e) => onItemAdded(e)} />
+      <NewTaskForm onItemAdded={onItemAdded}/>
     </header>
   );
 }
