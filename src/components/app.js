@@ -14,10 +14,6 @@ class App extends React.Component {
     };
   }
 
-  // componentDidUpdate() {
-  //   sessionStorage.setItem('todos', JSON.stringify(this.state.data))
-  // }
-
   onToggleEdit(id) {
     this.setState(({ data }) => ({
       data: this.toggleProperty(data, id, 'edit'),
@@ -25,14 +21,15 @@ class App extends React.Component {
   }
 
   onEditing(event, id) {
-    if (event.key === 'Enter') {
+    const {value} = event.target
+    if (event.key === 'Enter' && value.trim().length !== 0) {
       this.setState(({ data }) => {
         const idx = data.findIndex((el) => el.id === id);
 
         const oldItem = data[idx];
         const newItem = {
           ...oldItem,
-          description: event.target.value,
+          description: value,
           edit: !oldItem.edit,
         };
 
@@ -47,12 +44,6 @@ class App extends React.Component {
         data: this.toggleProperty(data, id, 'edit'),
       }));
     }
-  }
-
-  onToggleDone(id) {
-    this.setState(({ data }) => ({
-      data: this.toggleProperty(data, id, 'done'),
-    }));
   }
 
   onFilter(data, filter) {
@@ -109,7 +100,6 @@ class App extends React.Component {
         data: newData,
       };
     });
-    console.log(3)
   }
 
   addItem(text, min, sec) {
@@ -123,10 +113,15 @@ class App extends React.Component {
       };
     });
   }
-
+  
   onFilterChange(filter) {
     this.setState({ filter });
+  }
 
+  onToggleDone(id) {
+    this.setState(({ data }) => ({
+      data: this.toggleProperty(data, id, 'done'),
+    }));
   }
 
   toggleProperty(arr, id, propName) {

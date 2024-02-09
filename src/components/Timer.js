@@ -45,8 +45,6 @@ const Timer = (props) => {
 
     return () => {
       clearInterval(intervalId);
-      console.log("effect")
-  
     };
   }, [paused, over, time, startTimer]);
   
@@ -54,7 +52,14 @@ const Timer = (props) => {
     return () => {
       props.onPauseTimer(id, time)
     }
-  }, [])
+  }, [time])
+
+  useEffect(() => {
+    if (props.done) {
+      handlePause()
+      props.onPauseTimer(id, time)
+    }
+  }, [props.done])
 
   const handleResume = () => {
     setPaused(false);

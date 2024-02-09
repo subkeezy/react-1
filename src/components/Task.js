@@ -24,6 +24,7 @@ class Task extends React.Component {
       <Timer 
         {...this.props}
         onPauseTimer={onPauseTimer}
+        done={done}
       />
     )
 
@@ -32,10 +33,12 @@ class Task extends React.Component {
       ' editing': edit,
     });
 
+
+
     return (
       <li className={classNames}>
         <div className="view">
-          <input className="toggle" type="checkbox" onChange={onToggleDone} />
+          <input className="toggle" type="checkbox" checked={done} onChange={onToggleDone} />
           <label>
             <span className="title">{description}</span>
             {timer}
@@ -50,10 +53,6 @@ class Task extends React.Component {
   }
 }
 
-// Task.defaultProps = {
-//   description: 'Tasks default value',
-//   id: Math.random(),
-// };
 
 Task.propTypes = {
   id: propTypes.number,
@@ -65,7 +64,5 @@ Task.propTypes = {
   onToggleEdit: propTypes.func.isRequired,
   onToggleDone: propTypes.func.isRequired,
   onEditing: propTypes.func.isRequired,
-  min: propTypes.string,
-  sec: propTypes.string,
 };
 export default Task;
