@@ -384,7 +384,7 @@ body {
 	cursor: pointer;
 }
 
-.filters li button:hover {
+.filters li:hover button {
 	border-color: rgba(175, 47, 47, 0.1);
 }
 

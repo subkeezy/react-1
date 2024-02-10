@@ -79,7 +79,7 @@ class App extends React.Component {
     });
   }
 
-  onPauseTimer(id, time) {
+  onPauseTimer(id, time, paused) {
     this.setState(({ data }) => {
       const idx = data.findIndex((el) => el.id === id);
       if (idx < 0) {
@@ -90,7 +90,9 @@ class App extends React.Component {
       const newItem = {
         ...oldItem,
         min: time[0],
-        sec: time[1]
+        sec: time[1],
+        date: Date.now(),
+        timerPaused: paused
       };
 
       const newData = [...data.slice(0, idx), newItem, ...data.slice(idx + 1)];
@@ -141,7 +143,7 @@ class App extends React.Component {
       done: false,
       edit: false,
       min,
-      sec
+      sec,
     };
   }
 
@@ -168,6 +170,7 @@ class App extends React.Component {
           onToggleDone={this.onToggleDone.bind(this)}
           onEditing={this.onEditing.bind(this)}
           onPauseTimer={this.onPauseTimer.bind(this)} 
+          filter={filter}
         />
         <Footer
           doneCount={doneCount}
