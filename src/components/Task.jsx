@@ -59,7 +59,7 @@ class Task extends React.Component {
 
 
 Task.propTypes = {
-  id: propTypes.number,
+  id: propTypes.string,
   description: propTypes.string,
   edit: propTypes.bool.isRequired,
   done: propTypes.bool.isRequired,

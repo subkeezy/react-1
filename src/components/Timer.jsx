@@ -9,6 +9,9 @@ const Timer = (props) => {
 
   const { id, min: initialMin, sec: initialSec } = props;
 
+  const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
+  const idx = fromStorage.findIndex((el) => el.id === id);
+
   const [time, setTime] = useState(
     (initialMin !== undefined && initialSec !== undefined) ?
       [Number(initialMin), Number(initialSec)] :
@@ -22,6 +25,7 @@ const Timer = (props) => {
 
     if (m === 0 && s === 0) {
       setOver(true);
+      setTime([0, 0])
     } else if (s === 0) {
       setTime([m - 1, 59]);
     } else {
@@ -30,14 +34,11 @@ const Timer = (props) => {
   };
 
   const updateTimer = () => {
-    const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
-    const idx = fromStorage.findIndex((el) => el.id === id);
-    console.log(fromStorage)
-
     if (fromStorage[idx].date) {
       const nowDate = Date.now();
       const difference = nowDate - fromStorage[idx].date;
       const newSeconds = fromStorage[idx].sec - Math.floor(difference / 1000);
+      console.log(newSeconds)
 
       let [m, s] = time;
       setTime([m, newSeconds]);
@@ -47,9 +48,9 @@ const Timer = (props) => {
   };
 
   useEffect(() => {
+    setPaused(fromStorage[idx].isPaused)
 
-    if (!paused) {
-      console.log(paused)
+    if (!fromStorage[idx].isPaused) {
       updateTimer();
     }
     
@@ -62,7 +63,6 @@ const Timer = (props) => {
 
   const handleResume = () => {
     setPaused(false);
-    console.log(paused)
     setStartTimer(true);
 
     if (paused && ![Number(initialMin), Number(initialSec)]) {
@@ -81,8 +81,17 @@ const Timer = (props) => {
       intervalId = setInterval(tick, 1000);
     }
 
+
     return () => {
       clearInterval(intervalId);
+      const oldItem = fromStorage[idx];
+      const newItem = {
+        ...oldItem,
+        isPaused: paused
+      };
+
+      const newData = [...fromStorage.slice(0, idx), newItem, ...fromStorage.slice(idx + 1)];
+      sessionStorage.setItem('todos', JSON.stringify(newData))
     };
   }, [paused, over, time, startTimer, timerUpdate]);
 

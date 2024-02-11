@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import { nanoid } from 'nanoid';
 
 import Header from './Header';
 import TaskList from './TaskList';
@@ -12,6 +13,7 @@ class App extends React.Component {
       data: JSON.parse(sessionStorage.getItem('todos')) || [],
       filter: 'all'
     };
+    this.id = 1;
   }
 
   onToggleEdit(id) {
@@ -136,8 +138,10 @@ class App extends React.Component {
   }
 
   createTodoItem(description, min, sec) {
+    console.log(this.state.data)
+  
     return {
-      id: Math.random(),
+      id: nanoid(5),
       description,
       created: this.createdTime(),
       done: false,
@@ -145,6 +149,7 @@ class App extends React.Component {
       min,
       sec,
     };
+    
   }
 
   createdTime = () => {

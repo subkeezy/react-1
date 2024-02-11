@@ -19,15 +19,17 @@ function TasksFilter({ filter, onFilterChange }) {
     });
 
     return (
-      <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>
-        {description}
-      </button>
+      <li key={name}>
+        <button type="button" onClick={() => onFilterChange(name)} className={classNames}>
+          {description}
+        </button>
+      </li>
     );
   });
 
   return (
     <ul className="filters">
-      <li>{buttons}</li>
+      {buttons}
     </ul>
   );
 }
