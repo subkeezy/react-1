@@ -2,7 +2,7 @@ import propTypes from 'prop-types';
 
 import Task from './Task';
 
-function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing, onPauseTimer}) {
+function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing, onTimerUnmount}) {
   const elements = todos.map((el) => {
     const { id, ...elProps } = el;
     return (
@@ -13,7 +13,7 @@ function TaskList({ todos, onDeleted, onToggleEdit, onToggleDone, onEditing, onP
         onToggleDone={() => onToggleDone(id)}
         onToggleEdit={() => onToggleEdit(id)}
         onEditing={(e) => onEditing(e, id)}
-        onPauseTimer={onPauseTimer}
+        onTimerUnmount={onTimerUnmount}
         id={id}
       />
     );

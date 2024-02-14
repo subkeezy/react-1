@@ -13,7 +13,6 @@ class App extends React.Component {
       data: JSON.parse(sessionStorage.getItem('todos')) || [],
       filter: 'all'
     };
-    this.id = 1;
   }
 
   onToggleEdit(id) {
@@ -81,7 +80,7 @@ class App extends React.Component {
     });
   }
 
-  onPauseTimer(id, time, paused) {
+  onTimerUnmount(id, time, paused = true) {
     this.setState(({ data }) => {
       const idx = data.findIndex((el) => el.id === id);
       if (idx < 0) {
@@ -138,8 +137,6 @@ class App extends React.Component {
   }
 
   createTodoItem(description, min, sec) {
-    console.log(this.state.data)
-  
     return {
       id: nanoid(5),
       description,
@@ -148,8 +145,7 @@ class App extends React.Component {
       edit: false,
       min,
       sec,
-    };
-    
+    };   
   }
 
   createdTime = () => {
@@ -174,7 +170,7 @@ class App extends React.Component {
           onToggleEdit={this.onToggleEdit.bind(this)}
           onToggleDone={this.onToggleDone.bind(this)}
           onEditing={this.onEditing.bind(this)}
-          onPauseTimer={this.onPauseTimer.bind(this)} 
+          onTimerUnmount={this.onTimerUnmount.bind(this)} 
           filter={filter}
         />
         <Footer

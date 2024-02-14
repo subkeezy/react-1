@@ -9,9 +9,6 @@ const Timer = (props) => {
 
   const { id, min: initialMin, sec: initialSec } = props;
 
-  const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
-  const idx = fromStorage.findIndex((el) => el.id === id);
-
   const [time, setTime] = useState(
     (initialMin !== undefined && initialSec !== undefined) ?
       [Number(initialMin), Number(initialSec)] :
@@ -33,32 +30,10 @@ const Timer = (props) => {
     }
   };
 
-  const updateTimer = () => {
-    if (fromStorage[idx].date) {
-      const nowDate = Date.now();
-      const difference = nowDate - fromStorage[idx].date;
-      const newSeconds = fromStorage[idx].sec - Math.floor(difference / 1000);
-      console.log(newSeconds)
-
-      let [m, s] = time;
-      setTime([m, newSeconds]);
-      setTimerUpdate(true);
-
-    }
-  };
-
-  useEffect(() => {
-    setPaused(fromStorage[idx].isPaused)
-
-    if (!fromStorage[idx].isPaused) {
-      updateTimer();
-    }
-    
-  }, []);
-
   const handlePause = () => {
     setPaused(true);
     setPausedValue(time);
+    props.onTimerUnmount(id, time, paused)
   };
 
   const handleResume = () => {
@@ -69,40 +44,61 @@ const Timer = (props) => {
       setTime(pausedValue);
     }
   };
-
-
-  useEffect(() => {
-    let intervalId;
-
-    if (timerUpdate) {
-      intervalId = setInterval(tick, 1000);
-    } else if (!paused && !over && startTimer) {
-      clearInterval(intervalId);
-      intervalId = setInterval(tick, 1000);
+  
+  const updateTimer = () => {
+    const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
+    const idx = fromStorage.findIndex((el) => el.id === id);
+    
+    if (fromStorage[idx].date) {
+      const nowDate = Date.now();
+      const differenceInSeconds = Math.floor((nowDate - fromStorage[idx].date) / 1000);
+      let totalSeconds = fromStorage[idx].min * 60 + fromStorage[idx].sec - differenceInSeconds;
+      
+      if (totalSeconds < 0) {
+        totalSeconds = 0;
+      }
+      
+      const newMinutes = Math.floor(totalSeconds / 60);
+      const newSeconds = totalSeconds % 60;
+      
+      setTime([newMinutes, newSeconds]);
+      setTimerUpdate(true);
     }
-
-
-    return () => {
-      clearInterval(intervalId);
-      const oldItem = fromStorage[idx];
-      const newItem = {
-        ...oldItem,
-        isPaused: paused
-      };
-
-      const newData = [...fromStorage.slice(0, idx), newItem, ...fromStorage.slice(idx + 1)];
-      sessionStorage.setItem('todos', JSON.stringify(newData))
-    };
-  }, [paused, over, time, startTimer, timerUpdate]);
+  };
 
   useEffect(() => {
-    props.onPauseTimer(id, time, paused);
-  }, [time, paused]);
+    let timerId;
+    const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
+    const idx = fromStorage.findIndex((el) => el.id === id);
+    if (!fromStorage[idx].timerPaused) {
+      timerId = setInterval(tick, 1000)
+    }
+    return () => {
+      clearInterval(timerId)
+    }
+  }, [tick])
+  
+
+  useEffect(() => {
+    props.onTimerUnmount(id, time, paused);
+  }, [id, time, paused])
+
+
+  useEffect(() => {
+    const fromStorage = JSON.parse(sessionStorage.getItem('todos'));
+    const idx = fromStorage.findIndex((el) => el.id === id);
+    setPaused(fromStorage[idx].timerPaused)
+
+    if (!fromStorage[idx].timerPaused) {
+      updateTimer();
+    }
+    
+  }, []);
 
   useEffect(() => {
     if (props.done) {
       handlePause();
-      props.onPauseTimer(id, time, paused);
+      props.onTimerUnmount(id, time, paused);
     }
   }, [props.done]);
 

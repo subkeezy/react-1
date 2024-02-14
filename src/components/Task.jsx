@@ -14,7 +14,7 @@ class Task extends React.Component {
       onToggleEdit,
       onToggleDone,
       onEditing,
-      onPauseTimer,
+      onTimerUnmount,
       filter,
       timerPaused,
 
@@ -25,7 +25,7 @@ class Task extends React.Component {
     const timer = (
       <Timer 
         {...this.props}
-        onPauseTimer={onPauseTimer}
+        onTimerUnmount={onTimerUnmount}
         done={done}
         filter={filter}
         timerPaused={timerPaused}
