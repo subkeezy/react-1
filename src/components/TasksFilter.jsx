@@ -7,7 +7,7 @@ const filterBtns = [
   { name: 'completed', description: 'Completed' },
 ];
 
-function TasksFilter({ filter, onFilterChange }) {
+export default function TasksFilter({ filter, onFilterChange }) {
   TasksFilter.propTypes = {
     filter: propTypes.string.isRequired,
     onFilterChange: propTypes.func.isRequired,
@@ -33,5 +33,3 @@ function TasksFilter({ filter, onFilterChange }) {
     </ul>
   );
 }
-
-export default TasksFilter;

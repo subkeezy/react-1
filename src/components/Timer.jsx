@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 const Timer = (props) => {
   const [paused, setPaused] = useState(true);
   const [over, setOver] = useState(false);
-  const [startTimer, setStartTimer] = useState(false);
-  const [pausedValue, setPausedValue] = useState([null, null]);
-  const [timerUpdate, setTimerUpdate] = useState(false);
 
   const { id, min: initialMin, sec: initialSec } = props;
 
@@ -32,17 +29,11 @@ const Timer = (props) => {
 
   const handlePause = () => {
     setPaused(true);
-    setPausedValue(time);
     props.onTimerUnmount(id, time, paused)
   };
 
   const handleResume = () => {
     setPaused(false);
-    setStartTimer(true);
-
-    if (paused && ![Number(initialMin), Number(initialSec)]) {
-      setTime(pausedValue);
-    }
   };
   
   const updateTimer = () => {
@@ -62,7 +53,6 @@ const Timer = (props) => {
       const newSeconds = totalSeconds % 60;
       
       setTime([newMinutes, newSeconds]);
-      setTimerUpdate(true);
     }
   };
 
